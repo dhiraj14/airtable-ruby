@@ -25,6 +25,7 @@ module Airtable
       options["sortField"], options["sortDirection"] = options.delete(:sort) if options[:sort]
       results = self.class.get(worksheet_url, query: options).parsed_response
       check_and_raise_error(results)
+      results = JSON.parse(results) if results.is_a?(String)
       RecordSet.new(results)
     end
 
